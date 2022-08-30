@@ -14,7 +14,10 @@ type PluginConfiguration struct {
 }
 
 func ParsPluginConfiguration(cByte []byte) (PluginConfiguration, error) {
-	config := PluginConfiguration{}
+	config := PluginConfiguration{
+		DenyAll:   false,
+		CacheSize: 200,
+	}
 
 	if !gjson.ValidBytes(cByte) {
 		return PluginConfiguration{}, fmt.Errorf("the plugin configuration is not a valid json")
@@ -29,7 +32,10 @@ func ParsPluginConfiguration(cByte []byte) (PluginConfiguration, error) {
 	}
 
 	config.DenyAll = jsonData.Get("denyAll").Bool()
-	config.CacheSize = int(jsonData.Get("cacheSize").Int())
+
+	if cacheSize := int(jsonData.Get("cacheSize").Int()); cacheSize != 0 {
+		config.CacheSize = cacheSize
+	}
 
 	return config, nil
 }

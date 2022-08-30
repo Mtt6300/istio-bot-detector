@@ -1,3 +1,4 @@
+# Istio-bot-detector
 Istio-bot-detector is a wasm http filter which developed with golang, designed for Envoy to detect and reject incoming spam request's from bot.
 
 This module works with `user-agent` header to detect bot's and will compare them with regular expressions provided by you. This filter **does not set any initial rules**, it means up to you to configure it.
@@ -26,7 +27,7 @@ spec:
       - "Scrapy.*"
 
     denyAll: false
-    cacheSize: 5
+    cacheSize: 200
 ```
 
 `allow`: An array with all the [regex2](https://github.com/google/re2) that define bots. Matching bots are **allowed**.
@@ -35,7 +36,11 @@ spec:
 
 `denyAll`: This option give you ability to deny all user agents. It's useful when you want have a filter which accept incoming requests with **only** have matched `user-agent` with your allow expressions list. You can also ignore or remove deny section in your config when you use this option. More example.
 
+*note*: default value is **false**.
+
 `cacheSize`: A fixed integer which provide Size of cache which help you to speed up detection process. This is number of user agents you want to keep them on memory. More about [LRU caching system](https://github.com/hashicorp/golang-lru).
+
+*note*: default value is **200**.
 
 *note*: `cacheSize` can'not be lower than 1.
 
