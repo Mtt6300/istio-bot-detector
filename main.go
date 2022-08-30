@@ -75,7 +75,7 @@ func (ctx *httpContext) OnHttpRequestHeaders(numHeaders int, endOfStream bool) t
 	userAgent, _ := proxywasm.GetHttpRequestHeader("user-agent")
 
 	if detector.IsBot(userAgent, ctx.Detector, ctx.Configuration, ctx.CacheBucket) {
-		if err := proxywasm.SendHttpResponse(403, [][2]string{}, []byte("Bot is not allowed"), -1); err != nil {
+		if err := proxywasm.SendHttpResponse(403, [][2]string{}, nil, -1); err != nil {
 			proxywasm.LogErrorf("failed to send the 403 response: %v", err)
 		}
 		return types.ActionPause

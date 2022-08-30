@@ -3,6 +3,8 @@ Istio-bot-detector is a wasm http filter which developed with golang, designed f
 
 This module works with `user-agent` header to detect bot's and will compare them with regular expressions provided by you. This filter **does not set any initial rules**, it means up to you to configure it.
 
+Rejected request from bot receive **403 Forbidden** status code.
+
 # Configuring
 This is an example of `WasmPlugin` configuration which you can apply filter to envoy in istio service mesh. More about [WasmPlugin](https://istio.io/latest/docs/reference/config/proxy_extensions/wasm-plugin/).
 
